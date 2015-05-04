@@ -14,6 +14,8 @@ def main(args):
     inputInfo = giveInfoType(args.input)
     outDf = getLocation(inputInfo,df)
     print outDf[args.type]
+    
+    outDf.to_excel(args.output,'Sheet1')
 
 
 
@@ -42,6 +44,7 @@ def giveInfoType(inputList):
     return returnDict
 
 def getLocation(infoDict,df):
+    df = df.groupby('timeline').get_group('baseline')
     subjectInfo = pd.DataFrame()
     for info, infoType in infoDict.iteritems():
         if infoType == 'patientNumber':
