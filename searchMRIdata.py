@@ -58,9 +58,10 @@ def getLocation(infoDict,df):
             subjectDf = df[df.koreanName==info.decode('utf-8')]
 
             if len(subjectDf) < 1:
-                print info.decode('utf-8')
+                print info.decode('utf-8'), 'no data'
+
             elif len(subjectDf) > 1:
-                print info.decode('utf-8')
+                print info.decode('utf-8'), 'more than one data'
 
             subjectInfo = pd.concat([subjectInfo,subjectDf])
 
