@@ -45,6 +45,7 @@ def giveInfoType(inputList):
 
 def getLocation(infoDict,df):
     df = df.groupby('timeline').get_group('baseline')
+    df = df[~df.group.str.startswith('SNU')]
     subjectInfo = pd.DataFrame()
     for info, infoType in infoDict.iteritems():
         if infoType == 'patientNumber':
@@ -54,7 +55,13 @@ def getLocation(infoDict,df):
             subjectDf = df[df.DOB==info]
             subjectInfo = pd.concat([subjectInfo,subjectDf])
         else:
-            subjectDf = df[df.koreanName==info]
+            subjectDf = df[df.koreanName==info.decode('utf-8')]
+
+            if len(subjectDf) < 1:
+                print info.decode('utf-8')
+            elif len(subjectDf) > 1:
+                print info.decode('utf-8')
+
             subjectInfo = pd.concat([subjectInfo,subjectDf])
 
     return subjectInfo
